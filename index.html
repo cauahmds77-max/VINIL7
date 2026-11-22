@@ -2,9 +2,9 @@
 <html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0e0d0c">
-<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Vinil">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Deepcut">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-<title>Vinil — meus discos</title>
+<title>Deepcut — meus discos</title>
 <style>
 :root{--bg:#0e0d0c;--s:#181614;--s2:#24211e;--t:#efe9e0;--m:#948b80;--ac:#d9a441;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 Georgia,"Iowan Old Style",serif}
@@ -1001,7 +1001,7 @@ function match(a,q){const w=norm([a.t,a.a,...a.g].join(" ")).split(" ");return n
 const sorters={t:(a,b)=>a.t.localeCompare(b.t),a:(a,b)=>a.a.localeCompare(b.a),yd:(a,b)=>b.y-a.y,ya:(a,b)=>a.y-b.y};
 function sec(t,list,k){return list.length?`<h2>${t}</h2><div class="row">${list.slice(0,20).map(card).join("")}</div>`:""}
 function home(){const c=cat(),mine=S.c;const day=new Date().getDate();
-return `<div class="top"><h1>Vinil</h1><a href="#perfil" aria-label="Perfil e estatísticas" style="font-size:22px">☺</a></div><p class="sub">Seu catálogo pessoal de discos.</p>
+return `<div class="top"><h1>Deepcut</h1><a href="#perfil" aria-label="Perfil e estatísticas" style="font-size:22px">☺</a></div><p class="sub">Seu catálogo pessoal de discos.</p>
 ${artistRow()}
 ${sec("Em destaque hoje",[c[day%c.length],c[(day+5)%c.length],c[(day+9)%c.length]])}
 ${sec("Lançamentos mais recentes",[...c].sort(sorters.yd).slice(0,8))}
@@ -1301,7 +1301,7 @@ desc=identOf(r)+(nn?" "+nn:"")+(i.pl?(nn?", ":" ")+"natural de "+i.pl:"")+"."+(i
 row("Gêneros nos álbuns do catálogo",gs);
 const n=r.al.length;
 return `<p><a href="javascript:history.back()">‹ Voltar</a></p><div class="hero"><div class="big" style="max-width:200px">${aph(r)}</div><div><h1>${esc(r.n)}</h1><p class="sub">${identOf(r)}</p>${AW[r.n]?`<p>${esc(AW[r.n])}</p>`:""}<div class="box">${rows.join("")}</div></div></div>
-<h2>Álbuns no Letterboxd de Música</h2><p class="sub">${n} ${n>1?"álbuns":"álbum"} de ${esc(r.n)} disponíve${n>1?"is":"l"} no aplicativo, não necessariamente a discografia completa.</p><div class="row">${[...r.al].sort((a,b)=>a.y-b.y).map(acard).join("")}</div>`}
+<h2>Álbuns no Deepcut</h2><p class="sub">${n} ${n>1?"álbuns":"álbum"} de ${esc(r.n)} disponíve${n>1?"is":"l"} no aplicativo, não necessariamente a discografia completa.</p><div class="row">${[...r.al].sort((a,b)=>a.y-b.y).map(acard).join("")}</div>`}
 function listView(ids,st,emptyMsg,extra){let r=ids.map(get).filter(Boolean);if(st.q)r=r.filter(a=>match(a,st.q));const s=st.s;
 r.sort(s=="add"||s=="hear"?(a,b)=>(U(b.id)[s=="add"?"w":"h"]||0)-(U(a.id)[s=="add"?"w":"h"]||0):s=="r"?(a,b)=>(U(b.id).r||0)-(U(a.id).r||0):sorters[s]);
 return r.length?`<div class="grid">${r.map(a=>`<div>${card(a)}<div class="sm">${U(a.id).r?stars(U(a.id).r):""}</div><small style="color:var(--m)">${extra(a)}</small></div>`).join("")}</div>`:empty(emptyMsg)}
