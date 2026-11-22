@@ -100,6 +100,19 @@ nav a{transition:color .25s}nav a b{transition:transform .3s cubic-bezier(.2,.7,
 .li{transition:background-color .2s}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 html,body{-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none}button,nav a,.card,.cv{-webkit-user-select:none;user-select:none}input,textarea{-webkit-user-select:text;user-select:text}
+/* ===== página do álbum ===== */
+@media(max-width:699px){.hero .big{width:58%;margin:0 auto}.hero h1{text-align:center;font-size:30px;margin-top:6px}}
+.hero .big .cv:not(.av){border-radius:14px;box-shadow:0 14px 34px #000a}
+.hero .big.abig{width:160px;max-width:160px;margin:0 auto}@media(min-width:700px){.hero .big.abig{margin:0}}.hero .big .cv.av{border-radius:50%;box-shadow:0 10px 28px #000a}
+.rbox{padding:14px 8px;text-align:center}.rate{display:flex;justify-content:center;gap:4px}.rate .st{font-size:46px;line-height:1;transition:transform .15s}.rate .st:active{transform:scale(1.18)}.rbox button{margin-top:8px}
+.cbox{padding:14px 16px}.cbox textarea{display:block;width:100%;min-height:110px;resize:none;background:transparent;border:0;outline:0;padding:0;color:var(--t);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}.cbox textarea::placeholder{color:var(--t);font-weight:700;opacity:1}
+.pt.at{margin:22px 0 4px;background:transparent}.pt.at a{font:600 17px Georgia,serif;letter-spacing:0;text-transform:none;padding:12px 4px}
+.atc{min-height:120px}.fu,.enter-at .atc{animation:pg .3s cubic-bezier(.2,.7,.2,1) both}
+.dm{color:var(--m);font-size:14px;margin:14px 0}
+.tk{display:flex;gap:12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--s2)}.tk i{flex:none;width:26px;text-align:right;font-style:normal;color:var(--m);font-variant-numeric:tabular-nums}.tk span{flex:1;min-width:0;overflow-wrap:anywhere}.tk time{flex:none;color:var(--m);font-variant-numeric:tabular-nums}.ex{font:700 10px system-ui;background:var(--s2);color:var(--m);padding:1px 5px;border-radius:3px;font-style:normal}
+.dsc{font:600 13px system-ui;color:var(--m);margin:16px 0 2px;letter-spacing:.05em;text-transform:uppercase}
+.cr{padding:2px 0}.cr small{display:block;margin:16px 0 4px;color:var(--m)}.cr p{margin:0;line-height:1.55}
+details.hist{margin:18px 0 6px}details.hist summary{cursor:pointer;font:600 15px system-ui;color:var(--m);padding:8px 0}
 </style></head><body>
 <nav id="nav"></nav><main id="app"></main><div id="toast" role="status"></div>
 <script>
@@ -1300,7 +1313,7 @@ if(i.d)row("Falecimento",fd(i.d)+(i.b?" (aos "+ageAt(i.b,i.d)+" anos)":""));
 desc=identOf(r)+(nn?" "+nn:"")+(i.pl?(nn?", ":" ")+"natural de "+i.pl:"")+"."+(i.d?" Faleceu em "+fd(i.d)+(i.b?", aos "+ageAt(i.b,i.d)+" anos":"")+".":"")}
 row("Gêneros nos álbuns do catálogo",gs);
 const n=r.al.length;
-return `<p><a href="javascript:history.back()">‹ Voltar</a></p><div class="hero"><div class="big" style="max-width:200px">${aph(r)}</div><div><h1>${esc(r.n)}</h1><p class="sub">${identOf(r)}</p>${AW[r.n]?`<p>${esc(AW[r.n])}</p>`:""}<div class="box">${rows.join("")}</div></div></div>
+return `<p><a href="javascript:history.back()">‹ Voltar</a></p><div class="hero"><div class="big abig">${aph(r)}</div><div><h1>${esc(r.n)}</h1><p class="sub">${identOf(r)}</p>${AW[r.n]?`<p>${esc(AW[r.n])}</p>`:""}<div class="box">${rows.join("")}</div></div></div>
 <h2>Álbuns no Deepcut</h2><p class="sub">${n} ${n>1?"álbuns":"álbum"} de ${esc(r.n)} disponíve${n>1?"is":"l"} no aplicativo, não necessariamente a discografia completa.</p><div class="row">${[...r.al].sort((a,b)=>a.y-b.y).map(acard).join("")}</div>`}
 function listView(ids,st,emptyMsg,extra){let r=ids.map(get).filter(Boolean);if(st.q)r=r.filter(a=>match(a,st.q));const s=st.s;
 r.sort(s=="add"||s=="hear"?(a,b)=>(U(b.id)[s=="add"?"w":"h"]||0)-(U(a.id)[s=="add"?"w":"h"]||0):s=="r"?(a,b)=>(U(b.id).r||0)-(U(a.id).r||0):sorters[s]);
@@ -1319,12 +1332,14 @@ body=`<button data-a="back">‹ Listas</button><h2>${esc(l.n)}</h2><p class="sub
 ${l.ids.length?l.ids.map((i,n)=>{const a=get(i);return `<div class="li"><span>${n+1}. <a href="#album-${i}">${esc(a.t)}</a> <small>${esc(a.a)}</small></span><button data-a="lup" data-id="${i}" aria-label="Subir">↑</button><button data-a="ldn" data-id="${i}" aria-label="Descer">↓</button><button data-a="lrm" data-id="${i}" aria-label="Remover">✕</button></div>`}).join(""):empty("Lista vazia. Adicione álbuns acima.")}`}
 else body=`<div class="box" style="display:grid;gap:8px"><input id="l-n" placeholder="Nome da lista"><input id="l-d" placeholder="Descrição (opcional)"><button data-a="lnew">Criar lista</button></div>${S.lists.length?S.lists.map(l=>`<div class="li"><span><a href="#biblioteca" data-a="lopen" data-id="${l.id}"><b>${esc(l.n)}</b></a> <small>${l.ids.length} álbuns</small></span></div>`).join(""):empty("Você ainda não criou listas.")}`;
 return `<h1>Minha biblioteca</h1><div class="bar">${tabs}</div>${body}`}
-function album(id){const a=get(id);if(!a)return empty("Álbum não encontrado.")+`<p style="text-align:center"><a href="#explorar">Voltar ao Explorar</a></p>`;const u=U(id);
+function album(id){const a=get(id);if(!a)return empty("Álbum não encontrado.")+`<p style="text-align:center"><a href="#explorar">Voltar ao Explorar</a></p>`;const u=U(id),le=latest(id);if(P.aid!==id){P.aid=id;P.at="tracks"}
 return `<p><a href="javascript:history.back()">‹ Voltar</a></p><div class="hero"><div class="big">${cover(a,1)}</div><div><h1>${esc(a.t)}</h1><p style="margin:0 0 8px;font-size:17px">${esc(a.a)} · ${a.y}</p><p class="sub">Ficha: ${credits(a).map(n=>`<a href="#artista-${slug(n)}" style="text-decoration:underline">${esc(n)}</a>`).join(" · ")}</p><p>${a.g.map(g=>`<span class="tag">${esc(g)}</span>`).join("")}</p>${a.l?`<p class="sub">${esc(a.l)}</p>`:""}
-<div class="box"><small>Média da comunidade</small><div>${(c=>c?`<b style="font:700 22px Georgia,serif">${c.avg.toLocaleString("pt-BR",{maximumFractionDigits:2})}</b> <small>de 5 · ${c.n} avaliaç${c.n>1?"ões":"ão"}</small>`:`<small>Ainda sem avaliações</small>`)(comm(id))}</div></div>
-<div class="box"><small>Minha nota${u.r?" · "+fmt(u.r)+" de 5":""}</small><div>${stars(u.r||0,id)}</div>${u.r?`<button data-a="unrate" data-id="${id}">Remover nota</button>`:""}</div>
-<div class="bar"><button class="${u.w?"on":""}" data-a="w" data-id="${id}">${u.w?"Em Quero ouvir ✓":"Quero ouvir"}</button><button class="${u.f?"on":""}" data-a="f" data-id="${id}">${u.f?"♥ Favorito":"♡ Favoritar"}</button></div>${listenBox(id,u)}
+<div class="box rbox"><div class="rate" role="group" aria-label="Minha nota${u.r?": "+fmt(u.r)+" de 5":""}">${stars(u.r||0,id)}</div>${u.r?`<button data-a="unrate" data-id="${id}">Remover nota</button>`:""}</div>
+<div class="box cbox"><textarea id="cm" data-id="${id}" rows="5" maxlength="2000" placeholder="Adicionar comentário" aria-label="Adicionar comentário">${esc(le&&le.v||"")}</textarea></div>
+<div class="bar"><button class="${u.w?"on":""}" data-a="w" data-id="${id}">${u.w?"Em Quero ouvir ✓":"Quero ouvir"}</button><button class="${u.f?"on":""}" data-a="f" data-id="${id}">${u.f?"♥ Favorito":"♡ Favoritar"}</button></div>
+<div class="pt at" role="tablist">${[["tracks","Faixas"],["credits","Créditos"],["info","Informações"]].map(([k,l])=>`<a href="#album-${id}" role="tab" aria-selected="${P.at==k}" class="${P.at==k?"on":""}" data-a="atab" data-id="${k}">${l}</a>`).join("")}</div><div id="atc" class="atc">${atContent(a)}</div>
 ${S.lists.length?`<div class="bar"><select id="tolist">${S.lists.map(l=>`<option value="${l.id}">${esc(l.n)}</option>`).join("")}</select><button data-a="tolist" data-id="${id}">Adicionar à lista</button></div>`:""}
+${listenBox(id,u)}
 </div></div>${S.c.some(x=>x.id==id)?`<p><button data-a="delalb" data-id="${id}">Excluir do catálogo</button></p>`:""}`}
 function prof(){const h=Object.keys(S.u).filter(i=>S.u[i].h&&get(i)).map(get),rt=h.filter(a=>U(a.id).r),fav=Object.keys(S.u).filter(i=>S.u[i].f).length;
 const cnt=(f)=>{const m={};h.forEach(a=>f(a).forEach(k=>m[k]=(m[k]||0)+1));return Object.entries(m).sort((x,y)=>y[1]-x[1]).slice(0,5)};
@@ -1344,7 +1359,7 @@ const flag=c=>[...c.toUpperCase()].map(ch=>String.fromCodePoint(127397+ch.charCo
 const fdate=d=>{const[y,m,x]=d.split("-").map(Number);return new Date(y,m-1,x).toLocaleDateString("pt-BR",{day:"numeric",month:"short",year:"numeric"})};
 const HALF=[.5,1,1.5,2,2.5,3,3.5,4,4.5,5];
 function ent(e){return `<div class="box"><div class="bar" style="margin:0 0 8px"><input type="date" id="ed-${e.i}" value="${e.d}" max="${today()}"><select id="er-${e.i}"><option value="">Sem nota</option>${HALF.map(v=>`<option value="${v}" ${e.r===v?"selected":""}>${fmt(v)} ★</option>`).join("")}</select></div><textarea id="ev-${e.i}" rows="3" placeholder="Resenha (opcional)">${esc(e.v||"")}</textarea><div class="bar"><button data-a="esave" data-id="${e.i}">Salvar</button><button data-a="edel" data-id="${e.i}">Excluir audição</button></div></div>`}
-function listenBox(id,u){const ls=listens(id);return `<div class="box"><small>Registrar audição</small><div class="bar" style="margin:8px 0 0"><input type="date" id="ld" value="${today()}" max="${today()}"><button data-a="listen" data-id="${id}">Registrar audição</button></div>${u.w?`<label class="chk" style="color:var(--m)"><input type="checkbox" id="lrm" checked> Remover de Quero ouvir ao registrar</label>`:""}</div>${ls.length?`<h2 style="margin:14px 0 6px">Minhas audições (${ls.length})</h2>${ls.map(ent).join("")}`:""}`}
+function listenBox(id,u){const ls=listens(id);return ls.length?`<details class="hist"><summary>Minhas audições (${ls.length})</summary>${ls.map(ent).join("")}</details>`:""}
 function hres(){if(!P.hq.trim())return "";return cat().map(a=>[a,Math.max(sc(a.t,P.hq),sc(a.a,P.hq))]).filter(x=>x[1]).sort((x,y)=>y[1]-x[1]).slice(0,8).map(([a])=>`<div class="li"><span>${esc(a.t)} <small>${esc(a.a)} · ${a.y}</small></span><button data-a="hreg" data-id="${a.id}">Registrar</button></div>`).join("")}
 function hcard(e){const a=get(e.a);return `<div class="hc"><a class="card" href="#album-${a.id}">${cover(a)}<p>${esc(a.t)}</p><small>${esc(a.a)}</small></a><span class="hm">${fdate(e.d)}${e.v?" · ✎ resenha":""}</span>${e.r?`<div class="sm">${stars(e.r)}</div>`:""}</div>`}
 function favRes(){
@@ -1443,7 +1458,7 @@ else if(t.dataset.l=="q"){L.q=t.value;render2()}});
 function render2(){const f=document.activeElement,id=f&&f.dataset&&f.dataset.l,v=f&&f.value;render();if(id=="q"){const n=document.querySelector('[data-l=q]');n.focus();n.setSelectionRange(v.length,v.length)}}
 document.addEventListener("change",e=>{const t=e.target;if(t.dataset.f){F[t.dataset.f]=t.value;F.n=24;render()}else if(t.dataset.w=="s"){W.s=t.value;render()}else if(t.dataset.l=="s"){L.s=t.value;render()}});
 document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(!t)return;const a=t.dataset.a,id=t.dataset.id,v=x=>document.getElementById(x).value.trim();if(a=="smode"){M=id;render();return}
-if(a=="rate"){const r=t.getBoundingClientRect(),i=+t.dataset.i,val=e.clientX-r.left<r.width/2?i-.5:i,u=U(id);if(!okR(val))return;u.r=val;{const le=latest(id);if(le)le.r=val;else addListen(id,today(),val)}save();render();toast("Nota salva: "+fmt(val));return}
+if(a=="rate"){const r=t.getBoundingClientRect(),i=+t.dataset.i,val=e.clientX-r.left<r.width/2?i-.5:i,u=U(id);if(!okR(val))return;u.r=val;{const le=latest(id);if(le)le.r=val;else{addListen(id,today(),val);delete u.w}}save();render();toast("Nota salva: "+fmt(val));return}
 if(a=="unrate"){delete U(id).r;{const le=latest(id);if(le)delete le.r}save();render();toast("Nota removida")}
 else if(a=="w"){const u=U(id);u.w?delete u.w:u.w=Date.now();save();render();toast(u.w?"Adicionado a Quero ouvir":"Removido de Quero ouvir")}
 else if(a=="h"){const u=U(id);if(u.h){delete u.h}else{u.h=Date.now();delete u.w}save();render();toast(u.h?"Registrado como ouvido":"Registro removido")}
@@ -1475,6 +1490,8 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(!t
 if(a=="ptab"){P.tab=id;P.menu=0;ANI=2;render()}
 else if(a=="dfilt"){P.df=!P.df;render();if(P.df)popIn(".fp")}
 else if(a=="dclear"){DF=DFE();render()}
+else if(a=="atab"){P.at=id;ANI=3;const y=scrollY;render();scrollTo(0,y)}
+else if(a=="detretry"){const e=DET[id];if(e){delete e.it;delete e.mb}const y=scrollY;render();scrollTo(0,y)}
 else if(a=="pfopen"){P.fo=P.fo===i?-1:i;P.fs=-1;render()}
 else if(a=="pfgo"){P.fo=-1;location.hash="album-"+id}
 else if(a=="pfslot"){P.fo=-1;P.fs=P.fs===i?-1:i;P.fq="";render();const q=document.querySelector('[data-pf="q"]');if(q)q.focus()}
@@ -1506,6 +1523,60 @@ Object.assign(l,{n,d:(D.d||"").trim(),rk:!!D.rk,cv:D.cv,ids:[...D.ids]});const l
 else if(a=="pldel"){if(confirm("Excluir esta lista? Os álbuns continuam no catálogo.")){S.lists=S.lists.filter(x=>x.id!=id);P.tab="hist";save();toast("Lista excluída");location.hash="perfil";render()}}
 else if(a=="plup"||a=="pldn"||a=="plrm"){const l=S.lists.find(x=>x.id==id);if(!l)return;if(a=="plrm")l.ids.splice(i,1);else mv(l.ids,i,a=="plup"?-1:1);save();render()}});
 
+/* ===== detalhes do álbum: faixas, créditos, informações ===== */
+const DK="vinil-det-v1";let DET={};try{DET=JSON.parse(localStorage.getItem(DK))||{}}catch(e){DET={}}
+const detsave=()=>{try{const o={};for(const k in DET){const e=DET[k],r={};if(e.it&&e.it.s=="ok")r.it=e.it;if(e.mb&&e.mb.s=="ok")r.mb=e.mb;if(r.it||r.mb)o[k]=r}localStorage.setItem(DK,JSON.stringify(o))}catch(e){}};
+function pickCol(a,rs){let best=null,bs=-1;for(const r of rs){if(!r.collectionId)continue;const n=r.collectionName||"";if(!(norm(n)==norm(a.t)||cst(n)==cst(a.t))||!artOK(a,r.artistName||""))continue;const y=+String(r.releaseDate).slice(0,4),rei=REI.test(n)&&norm(n)!=norm(a.t),yo=Math.abs(y-a.y)<=1,k=yo&&!rei?3:yo?2:rei&&y>a.y?1:0;if(k>bs){bs=k;best=r}}return best}
+async function jr(u){for(let t=0;t<3;t++){try{return await jsonp(u)}catch(e){await sleep(1500*(t+1))}}throw 0}
+async function itGet(a){for(const cc of["us","br"]){const d=await jr("https://itunes.apple.com/search?entity=album&limit=25&country="+cc+"&term="+encodeURIComponent(a.a.replace(/\(.*\)/,"")+" "+a.t)),r=pickCol(a,d.results||[]);if(!r)continue;
+const L=await jr("https://itunes.apple.com/lookup?id="+r.collectionId+"&entity=song&limit=200&country="+cc);
+const tr=(L.results||[]).filter(x=>x.wrapperType=="track"&&x.trackName).map(x=>({n:x.trackNumber||0,d:x.discNumber||1,t:x.trackName,ms:x.trackTimeMillis||0,a:x.artistName||"",x:x.trackExplicitness=="explicit"?1:0})).sort((p,q)=>p.d-q.d||p.n-q.n);
+return{s:"ok",rd:String(r.releaseDate||"").slice(0,10),cp:r.copyright||"",tr}}
+return{s:"ok",rd:"",cp:"",tr:[]}}
+let mbT=0;
+async function mbj(u){for(let t=0;t<3;t++){const w=mbT+1150-Date.now();if(w>0)await sleep(w);mbT=Date.now();try{const r=await fetch(u);if(r.ok)return await r.json();if(r.status!=503&&r.status!=429)throw 0}catch(e){if(e===0)throw 0}await sleep(2000*(t+1))}throw 0}
+async function mbGet(a){const q='releasegroup:"'+a.t.replace(/"/g,"")+'" AND artist:"'+prim(a.a)+'"',E={s:"ok",prod:[],comp:[],label:"",rd:""};
+const d=await mbj("https://musicbrainz.org/ws/2/release-group/?fmt=json&limit=8&query="+encodeURIComponent(q));
+const ok=(d["release-groups"]||[]).filter(x=>{const y=+(x["first-release-date"]||"").slice(0,4),n=(x["artist-credit"]||[]).map(z=>z.name).join(" ");return norm(x.title)==norm(a.t)&&artOK(a,n)&&(!y||Math.abs(y-a.y)<=1)});
+const g=ok.find(x=>x["primary-type"]=="Album"&&!(x["secondary-types"]||[]).length)||ok[0];if(!g)return E;
+const rg=await mbj("https://musicbrainz.org/ws/2/release-group/"+g.id+"?inc=releases&fmt=json");
+const rs=(rg.releases||[]).slice().sort((x,y)=>((x.status=="Official"?0:1)-(y.status=="Official"?0:1))||(x.date||"9999").localeCompare(y.date||"9999"));if(!rs.length)return E;
+const rel=await mbj("https://musicbrainz.org/ws/2/release/"+rs[0].id+"?inc=recordings+artist-rels+recording-level-rels+work-rels+work-level-rels+labels&fmt=json");
+const pr=new Map(),cm=new Map(),add=(m,n,k)=>{if(!n)return;const o=m.get(n)||new Set();o.add(k);m.set(n,o)};let nt=0;
+(rel.relations||[]).forEach(x=>{if(x.type=="producer"&&x.artist)add(pr,x.artist.name,"*")});
+(rel.media||[]).forEach(md=>(md.tracks||[]).forEach(t=>{nt++;const k=t.title||nt;((t.recording||{}).relations||[]).forEach(x=>{if(x.type=="producer"&&x.artist)add(pr,x.artist.name,k);if(x.work)(x.work.relations||[]).forEach(w=>{if(w.artist&&/^(composer|writer|lyricist)$/.test(w.type))add(cm,w.artist.name,k)})})}));
+const fin=m=>[...m.entries()].map(([n,z])=>[n,z.has("*")?nt:z.size]).sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).map(x=>x[0]);
+const lb=[...new Set((rel["label-info"]||[]).map(x=>x.label&&x.label.name).filter(n=>n&&!/^\[no label\]$/i.test(n)))];
+return{s:"ok",prod:fin(pr),comp:fin(cm),label:lb.slice(0,2).join(" / "),rd:rel.date||""}}
+function detNeed(id,tab){const a=get(id);if(!a)return;const e=DET[id]||(DET[id]={});
+if(!e.it){e.it={s:"load"};itGet(a).then(r=>{e.it=r;detsave();detUpd(id)}).catch(()=>{e.it={s:"err"};detUpd(id)})}
+if((tab=="credits"||tab=="info")&&!e.mb){e.mb={s:"load"};mbGet(a).then(r=>{e.mb=r;detsave();detUpd(id)}).catch(()=>{e.mb={s:"err"};detUpd(id)})}}
+function detUpd(id){if(location.hash!=="#album-"+id)return;const el=document.getElementById("atc"),a=get(id);if(!el||!a)return;el.innerHTML=atContent(a);el.classList.remove("fu");void el.offsetWidth;el.classList.add("fu")}
+const mm=ms=>{const t=Math.round(ms/1000);return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")};
+const durTxt=ms=>{const m=Math.round(ms/60000);return m>=60?Math.floor(m/60)+" h "+(m%60)+" min":m+" min"};
+const labelOf=cp=>String(cp).replace(/^[\s℗©Ⓟ\d,\-–&]+/,"").replace(/,?\s+(?:a|an|uma)\s+(?:division|subsidiary|label|unit)\b.*$/i,"").replace(/\s+under exclusive licen[sc]e.*$/i,"").trim();
+function featsOf(a,tr){const own=new Set(credits(a).map(norm)),full=norm(a.a),m=new Map(),add=n=>{n=n.trim();const q=norm(n);if(!q||own.has(q)||full.includes(q))return;m.set(n,(m.get(n)||0)+1)};
+tr.forEach(x=>{const f=/[\(\[](?:feat\.?|ft\.?|featuring|with|com|part\.?)\s+([^\)\]]+)[\)\]]/i.exec(x.t);if(f)f[1].split(/\s*(?:,|&|\be\b|\band\b|\+)\s*/i).forEach(add);
+if(norm(x.a)!==full)x.a.split(/\s*(?:,|&|\bfeat\.?\s|\band\b|\be\b| x )\s*/i).forEach(add)});
+return[...m.entries()].sort((p,q)=>q[1]-p[1]).map(p=>p[0])}
+function atContent(a){const id=a.id,e=DET[id]||{},it=e.it,mb=e.mb,tab=P.at,dm=m=>`<p class="dm">${m}</p>`,retry=`<div class="bar"><button data-a="detretry" data-id="${id}">Tentar de novo</button></div>`;
+if(tab=="tracks"){if(!it||it.s=="load")return dm("Carregando faixas…");if(it.s=="err")return dm("Não foi possível carregar as faixas agora. Verifique a conexão.")+retry;if(!it.tr.length)return dm("Faixas não encontradas para este álbum.")+retry;
+const multi=new Set(it.tr.map(x=>x.d)).size>1;let cd=0;return `<div class="tks">${it.tr.map((x,i)=>{let h="";if(multi&&x.d!==cd){cd=x.d;h=`<h3 class="dsc">Disco ${x.d}</h3>`}return h+`<div class="tk"><i>${x.n||i+1}</i><span>${esc(x.t)}${x.x?` <em class="ex">E</em>`:""}</span><time>${x.ms?mm(x.ms):""}</time></div>`}).join("")}</div>`}
+const row=(l,h)=>`<div class="cr"><small>${l}</small><p>${h}</p></div>`,none=`<span class="dm">Não encontrado</span>`,names=arr=>arr.slice(0,14).map(esc).join(" · ")+(arr.length>14?` <span class="dm">e mais ${arr.length-14}</span>`:"");
+if(tab=="credits"){const ft=it&&it.s=="ok"?featsOf(a,it.tr):null;let h=row("Artista",credits(a).map(n=>`<a href="#artista-${slug(n)}" style="text-decoration:underline">${esc(n)}</a>`).join(" · "));
+h+=row("Participações",!it||it.s=="load"?"Carregando…":it.s=="err"?none:ft.length?names(ft):`<span class="dm">Nenhuma encontrada</span>`);
+if(!mb||mb.s=="load")h+=row("Produtores","Carregando…")+row("Compositores","Carregando…");
+else if(mb.s=="err")h+=dm("Não foi possível buscar produtores e compositores agora.")+retry;
+else h+=row("Produtores",mb.prod.length?names(mb.prod):none)+row("Compositores",mb.comp.length?names(mb.comp):none)+dm("Os créditos vêm do MusicBrainz e da Apple Music e dependem do que está cadastrado lá.")+(mb.prod.length||mb.comp.length?"":retry);
+return h}
+const rd=(it&&it.s=="ok"&&it.rd)||(mb&&mb.s=="ok"&&mb.rd)||"",lab=(mb&&mb.s=="ok"&&mb.label)||(it&&it.s=="ok"&&labelOf(it.cp))||"",ms=it&&it.s=="ok"?it.tr.reduce((z,x)=>z+x.ms,0):0,ld=!it||it.s=="load",r2=(l,v)=>`<div class="li"><span>${l}</span><b>${v}</b></div>`;
+const dtx=/^\d{4}-\d\d-\d\d$/.test(rd)?fdate(rd):rd||String(a.y);
+return r2("Data de lançamento",esc(dtx))+r2("Gravadora",lab?esc(lab):(ld||(mb&&mb.s=="load")?"Carregando…":"—"))+r2("Gênero",esc(a.g.join(", ")||"—"))+r2("Duração",ms?durTxt(ms):ld?"Carregando…":"—")+r2("Faixas",it&&it.s=="ok"&&it.tr.length?it.tr.length:ld?"Carregando…":"—")+(it&&it.s=="err"?dm("Não foi possível carregar todas as informações agora.")+retry:"")}
+let cmT;
+function cmSave(t,toastIt){const id=t.dataset.id,v=t.value.trim().slice(0,2000),le=latest(id),u=U(id);if(le){if((le.v||"")===v)return;if(v)le.v=v;else delete le.v}else if(v){delete u.w;addListen(id,today(),u.r,v)}else return;save();if(toastIt)toast("Comentário salvo")}
+document.addEventListener("input",e=>{const t=e.target;if(t.id!="cm")return;clearTimeout(cmT);cmT=setTimeout(()=>cmSave(t),700)});
+document.addEventListener("change",e=>{const t=e.target;if(t.id!="cm")return;clearTimeout(cmT);cmSave(t,1)});
+
 /* ===== transições: página, abas, capas ===== */
 let ANI=1;
 function popIn(sel){const e=document.querySelector(sel);if(!e)return;e.classList.add("pi");setTimeout(()=>e.classList.remove("pi"),400)}
@@ -1513,9 +1584,10 @@ document.addEventListener("load",e=>{const t=e.target;if(t&&t.tagName=="IMG"&&t.
 const render0=render;
 render=function(){const app=document.getElementById("app"),pa=document.querySelector(".pt a.on"),ox=pa?pa.getBoundingClientRect().left:null,mode=ANI;ANI=0;
 render0();
+{const m=/^#album-(.+)$/.exec(location.hash);if(m)detNeed(decodeURIComponent(m[1]),P.at)}
 app.querySelectorAll(".cv img:not(.ld)").forEach(i=>{if(i.complete&&i.naturalWidth)i.classList.add("ld","ld0")});
-app.classList.remove("enter","enter-tab");
-if(mode){void app.offsetWidth;app.classList.add(mode==2?"enter-tab":"enter");clearTimeout(render.t);render.t=setTimeout(()=>app.classList.remove("enter","enter-tab"),1000)}
+app.classList.remove("enter","enter-tab","enter-at");
+if(mode){void app.offsetWidth;app.classList.add(mode==3?"enter-at":mode==2?"enter-tab":"enter");clearTimeout(render.t);render.t=setTimeout(()=>app.classList.remove("enter","enter-tab","enter-at"),1000)}
 const pt=document.querySelector(".pt"),na=document.querySelector(".pt a.on");if(pt&&na&&ox!=null)pt.style.setProperty("--dx",(ox-na.getBoundingClientRect().left)+"px");
 clearTimeout(render.s);render.s=setTimeout(()=>document.querySelectorAll(".cv img:not(.ld)").forEach(i=>{if(i.complete)i.classList.add("ld")}),1500)};
 
