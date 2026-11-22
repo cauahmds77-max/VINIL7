@@ -48,6 +48,7 @@ input,select,textarea{max-width:100%}input[type=search],textarea{width:100%}
 .btn{display:inline-block;background:var(--s2);color:var(--t);border:1px solid #3a352f;border-radius:6px;padding:9px 12px;font:14px system-ui;cursor:pointer}.chk{display:flex;gap:8px;align-items:center;font:14px system-ui}input[type=checkbox]{width:18px;height:18px;padding:0}
 .mh{font:600 12px system-ui;text-transform:uppercase;letter-spacing:.08em;color:var(--m);padding:10px 0 8px;border-top:1px solid #2a2a2a;margin-top:6px}.hm{display:block;color:var(--m);font-size:11px;margin-top:2px}.row .hc{flex:0 0 130px}
 .cv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}.lc{background-size:cover!important;background-position:center!important}.lr{align-items:center}.lr .lrc{flex:0 0 52px}.lr .cv{padding:0}.lr .cv b,.lr .cv i{display:none}.li .rk{flex:0 0 64px;font:700 18px Georgia,serif}.rk small{display:block;font:11px system-ui;color:var(--m)}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:22px 0 10px}.sh h2{margin:0}.sh a{font:600 13px system-ui,sans-serif;color:var(--sel);white-space:nowrap}.rw{position:relative}.rkn{position:absolute;top:6px;left:6px;background:#000b;color:#fff;font:700 12px system-ui,sans-serif;border-radius:10px;padding:1px 8px;pointer-events:none}
 .f4g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:4px 0 14px}
 .f4{min-width:0;position:relative}
 .f4c{display:block;width:100%;padding:0;border:0;background:none;border-radius:4px}.f4c.on .cv{outline:2px solid var(--sel);outline-offset:2px}
@@ -977,6 +978,124 @@ NEW.split("\n").forEach(l=>{const p=l.split("|"),k=key(p[0],p[1],+p[2]);
 if(idx.get(k)||S.c.some(x=>key(x.t,x.a,x.y)===k))return;
 let id=slug(p[0]+" "+p[2]);if(base.some(x=>x.id===id))id=slug(p[0]+" "+p[1]+" "+p[2]);
 const a={id,t:p[0],a:p[1],y:+p[2],g:p[3].split(","),l:""};base.push(a);idx.set(k,a)});
+const CUR=`G|Lost Weekend|Phoebe Bridgers|2026|Indie folk,Indie rock
+G|The Art of Loving|Olivia Dean|2025|Soul,Pop
+G|Dandelion|Ella Langley|2026|Country
+G|The Romantic|Bruno Mars|2026|Pop,R&B
+G|THIS MUSIC MAY CONTAIN HOPE.|RAYE|2026|Soul,Pop
+G|you seem pretty sad for a girl so in love|Olivia Rodrigo|2026|Pop,Pop rock
+G|LUX (Complete Works)|ROSALÍA|2025|Pop,Música clássica|LUX
+G|The Life of a Showgirl|Taylor Swift|2025|Pop
+R|The Fall-Off|J. Cole|2026|Hip hop
+R|ICEMAN|Drake|2026|Hip hop,R&B
+R|Octane|Don Toliver|2026|Hip hop,R&B
+R|The Mountain|Gorillaz|2026|Alternativo,Eletrônica
+R|Nothing's About to Happen to Me|Mitski|2026|Indie rock
+R|Prizefighter|Mumford & Sons|2026|Folk rock
+R|Cloud 9|Megan Moroney|2026|Country
+R|Ca$ino|Baby Keem|2026|Hip hop
+R|DEADLINE|BLACKPINK|2026|K-pop
+R|Wuthering Heights|Charli xcx|2026|Pop,Eletrônica
+R|Petal|Ariana Grande|2026|Pop
+R|THIS & THAT|Stray Kids|2026|K-pop
+R|WILD|KATSEYE|2026|Pop
+R|THE SIN: BLISS|ENHYPEN|2026|K-pop
+R|I'm the Problem|Morgan Wallen|2025|Country
+R|The Real Me|Future|2026|Hip hop,Trap
+R|Confessions II|Madonna|2026|Pop,Dance
+R|Bully|Ye|2026|Hip hop
+R|HADES|Melanie Martinez|2026|Pop alternativo
+R|Whatever's Clever!|Charlie Puth|2026|Pop
+V|Thriller|Michael Jackson|1982|Pop,R&B,Funk
+V|Their Greatest Hits (1971–1975)|Eagles|1976|Rock,Country rock
+V|Back in Black|AC/DC|1980|Hard rock
+V|Dark Side of the Moon|Pink Floyd|1973|Rock progressivo
+V|Hotel California|Eagles|1976|Rock,Country rock
+V|Rumours|Fleetwood Mac|1977|Rock,Soft rock
+V|Come On Over|Shania Twain|1997|Country,Pop
+V|The Bodyguard (Soundtrack)|Whitney Houston|1992|R&B,Pop
+V|Led Zeppelin IV|Led Zeppelin|1971|Rock,Hard rock
+V|Jagged Little Pill|Alanis Morissette|1995|Rock alternativo
+V|21|Adele|2011|Pop,Soul
+V|Legend|Bob Marley & The Wailers|1984|Reggae
+V|Metallica|Metallica|1991|Heavy metal
+V|Let's Talk About Love|Celine Dion|1997|Pop
+V|Gold – Greatest Hits|ABBA|1992|Pop,Disco
+V|1|The Beatles|2000|Rock,Pop rock
+V|Grease|Soundtrack|1978|Trilha sonora,Pop
+V|Dirty Dancing|Soundtrack|1987|Trilha sonora,Pop
+V|Appetite for Destruction|Guns N' Roses|1987|Hard rock
+V|Dookie|Green Day|1994|Punk rock
+C|What's Going On|Marvin Gaye|1971|Soul
+C|Pet Sounds|The Beach Boys|1966|Rock,Pop
+C|Blue|Joni Mitchell|1971|Folk
+C|Songs in the Key of Life|Stevie Wonder|1976|Soul,Funk
+C|Innervisions|Stevie Wonder|1973|Soul,Funk
+C|Astral Weeks|Van Morrison|1968|Folk rock
+C|Forever Changes|Love|1967|Rock psicodélico
+C|Horses|Patti Smith|1975|Punk rock
+C|Exile on Main St.|The Rolling Stones|1972|Rock
+C|Blood on the Tracks|Bob Dylan|1975|Folk rock
+C|Hejira|Joni Mitchell|1976|Folk
+C|Tapestry|Carole King|1971|Pop,Folk rock
+C|A Love Supreme|John Coltrane|1965|Jazz
+C|The Rise and Fall of Ziggy Stardust and the Spiders from Mars|David Bowie|1972|Rock,Glam rock
+C|London Calling|The Clash|1979|Punk rock
+C|Remain in Light|Talking Heads|1980|New wave,Art rock
+C|Purple Rain|Prince|1984|Pop,Rock,Funk
+C|The Queen Is Dead|The Smiths|1986|Rock alternativo
+C|Grace|Jeff Buckley|1994|Rock alternativo
+C|In the Court of the Crimson King|King Crimson|1969|Rock progressivo
+I|Sgt. Pepper's Lonely Hearts Club Band|The Beatles|1967|Rock,Pop rock
+I|Kind of Blue|Miles Davis|1959|Jazz,Jazz modal
+I|The Velvet Underground & Nico|The Velvet Underground|1967|Rock,Rock experimental
+I|Are You Experienced|The Jimi Hendrix Experience|1967|Rock,Rock psicodélico
+I|Black Sabbath|Black Sabbath|1970|Heavy metal
+I|Never Mind the Bollocks, Here's the Sex Pistols|Sex Pistols|1977|Punk rock
+I|Unknown Pleasures|Joy Division|1979|Post-punk
+I|Straight Outta Compton|N.W.A|1988|Hip hop
+I|Paul's Boutique|Beastie Boys|1989|Hip hop
+I|The Chronic|Dr. Dre|1992|Hip hop
+I|Illmatic|Nas|1994|Hip hop
+I|The Miseducation of Lauryn Hill|Lauryn Hill|1998|Hip hop,R&B
+I|Kid A|Radiohead|2000|Rock alternativo,Eletrônica
+I|Bitches Brew|Miles Davis|1970|Jazz,Jazz fusion
+I|Ramones|Ramones|1976|Punk rock
+I|Trans-Europe Express|Kraftwerk|1977|Eletrônica
+I|Autobahn|Kraftwerk|1974|Eletrônica
+I|Selected Ambient Works 85–92|Aphex Twin|1992|Eletrônica,Ambient
+I|Discovery|Daft Punk|2001|Eletrônica,House
+I|808s & Heartbreak|Kanye West|2008|Hip hop,Synth-pop
+D|Windswept Adan|Ichiko Aoba|2020|Folk,Ambient
+D|Grandeza|Sessa|2022|MPB,Folk
+D|Little Electric Chicken Heart|Ana Frango Elétrico|2023|MPB,Pop
+D|Encarnado|Juçara Marçal|2021|MPB,Experimental
+D|False Lankum|Lankum|2023|Folk
+D|Afrique Victime|Mdou Moctar|2021|Rock,Música tuaregue
+D|Black Classical Music|Yussef Dayes|2023|Jazz,Soul
+D|Vulture Prince|Arooj Aftab|2021|Música do mundo,Jazz
+D|Space 1.8|Nala Sinephro|2021|Jazz,Ambient
+D|Childqueen|Kadhja Bonet|2018|Soul,Psicodelia
+D|Tchamantché|Rokia Traoré|2008|Música do mundo,Folk
+D|Lhasa|Lhasa de Sela|2009|Folk,Música do mundo
+D|Seven Swans|Sufjan Stevens|2004|Folk,Indie folk
+D|The Durutti Column|The Durutti Column|1980|Post-punk,Ambient
+D|Mahoroboshiya|Ichiko Aoba|2023|Folk,Ambient
+D|The Epic|Kamasi Washington|2015|Jazz
+D|Melt My Eyez See Your Future|Denzel Curry|2022|Hip hop
+D|Aromanticism|Moses Sumney|2017|Art pop,Soul
+D|Abyss|Chelsea Wolfe|2015|Gothic rock,Doom metal
+D|Crumbling|Mid-Air Thief|2019|Folk,Indie`.split("\n").map(l=>{const p=l.split("|");return{k:p[0],t:p[1],a:p[2],y:+p[3],g:p[4].split(","),al:p[5]||""}});
+const cn=x=>norm(x).replace(/\s+/g," ").trim().replace(/^the /,"");
+CUR.forEach(c=>{const kt=cn(c.al||c.t),ka=cn(c.a);
+if(base.some(x=>cn(x.t)===kt&&cn(x.a)===ka)||S.c.some(x=>cn(x.t)===kt&&cn(x.a)===ka))return;
+let id=slug(c.t+" "+c.y);if(base.some(x=>x.id===id))id=slug(c.t+" "+c.a+" "+c.y);
+base.push({id,t:c.t,a:c.a,y:c.y,g:c.g,l:""})});
+const DEST=[["grammy-2027","Álbum do Ano — Grammy 2027","G"],["lancamentos-2026","Lançamentos Mais Recentes — 2026","R"],["mais-vendidos","Álbuns Mais Vendidos","V",1],["classicos","Clássicos Indispensáveis","C"],["influentes","Álbuns Mais Influentes","I"],["descobertas","Descobertas para Ouvir","D"]];
+function curList(k){const m=new Map();cat().forEach(a=>{const q=cn(a.t)+"|"+cn(a.a);if(!m.has(q))m.set(q,a)});return CUR.filter(c=>c.k===k).map(c=>m.get(cn(c.al||c.t)+"|"+cn(c.a))).filter(Boolean)}
+const dcard=(a,i,r)=>r?`<div class="ac rw">${card(a)}<span class="rkn">${i+1}</span></div>`:card(a);
+function dsec(d){const l=curList(d[2]);return l.length?`<div class="sh"><h2>${d[1]}</h2><a href="#destaque-${d[0]}">Ver todos</a></div><div class="row">${l.map((a,i)=>dcard(a,i,d[3])).join("")}</div>`:""}
+function destaque(k){const d=DEST.find(x=>x[0]===k);if(!d)return empty("Seleção não encontrada. Volte ao <a href='#inicio'>início</a>.");const l=curList(d[2]);return `<p><a href="#inicio">‹ Início</a></p><h1>${d[1]}</h1><p class="sub">${l.length} álbuns${d[3]?" · na ordem do ranking":""}</p><div class="grid">${l.map((a,i)=>dcard(a,i,d[3]).replace('class="ac rw"','class="rw"')).join("")}</div>`}
 catReady=1;initS();
 const comm=id=>{const r=[(S.u[id]||{}).r].filter(okR);return r.length?{n:r.length,avg:r.reduce((s,v)=>s+v*2,0)/r.length/2}:null};
 const CK="vinil-capas-v1";let C={};try{C=JSON.parse(localStorage.getItem(CK))||{}}catch(e){}
@@ -1020,11 +1139,8 @@ function sec(t,list,k){return list.length?`<h2>${t}</h2><div class="row">${list.
 function home(){const c=cat(),mine=S.c;const day=new Date().getDate();
 return `<div class="top"><h1>Deepcut</h1><a href="#perfil" aria-label="Perfil e estatísticas" style="font-size:22px">☺</a></div><p class="sub">Seu catálogo pessoal de discos.</p>
 ${artistRow()}
-${sec("Em destaque hoje",[c[day%c.length],c[(day+5)%c.length],c[(day+9)%c.length]])}
-${sec("Lançamentos mais recentes",[...c].sort(sorters.yd).slice(0,8))}
-${sec("Clássicos (até 1979)",c.filter(a=>a.y<1980).sort(sorters.ya))}
+${DEST.map(dsec).join("")}
 ${sec("Música brasileira",c.filter(a=>a.g.includes("MPB")))}
-${sec("Descobertas: para ouvir",c.filter(a=>!U(a.id).h).slice(0,8))}
 ${sec("Adicionados por você",mine)}
 <div class="box"><small>Cada disco mostra sua nota pessoal (de 0,5 em 0,5) e a média da comunidade.</small></div>`}
 function explore(){const c=cat();const gs=[...new Set(c.flatMap(a=>a.g))].sort(),ds=[...new Set(c.map(a=>Math.floor(a.y/10)*10))].sort(),as=[...new Set(c.map(a=>a.a))].sort();
@@ -1181,10 +1297,68 @@ RAYE|f|Rachel Agatha Keen||||uk
 Olivia Rodrigo|f|Olivia Isabel Rodrigo|2003-02-20||Murrieta, Califórnia|us
 Bruno Mars|m|Peter Gene Hernandez|1985-10-08||Honolulu, Havaí|us
 Anderson .Paak|m|Brandon Paak Anderson|1986-02-08||Oxnard, Califórnia|us||Anderson Paak
-Silk Sonic|p||2021|||us|Bruno Mars;Anderson .Paak`;
-const CT={us:["EUA","norte-americano","norte-americana"],uk:["Reino Unido","britânico","britânica"],br:["Brasil","brasileiro","brasileira"],ca:["Canadá","canadense","canadense"],ie:["Irlanda","irlandês","irlandesa"],fr:["França","francês","francesa"],se:["Suécia","sueco","sueca"],is:["Islândia","islandês","islandesa"],nz:["Nova Zelândia","neozelandês","neozelandesa"],au:["Austrália","australiano","australiana"],ng:["Nigéria","nigeriano","nigeriana"],pr:["Porto Rico","porto-riquenho","porto-riquenha"],es:["Espanha","espanhol","espanhola"],bb:["Barbados","barbadiano","barbadiana"],pk:["Paquistão","paquistanês","paquistanesa"]};
+Silk Sonic|p||2021|||us|Bruno Mars;Anderson .Paak
+J. Cole|m|Jermaine Lamarr Cole|1985-01-28||Frankfurt, Alemanha|us
+Don Toliver|m|Caleb Zackery Toliver|1994-06-22||Houston, Texas|us
+Gorillaz|p||1998||Londres|uk|Damon Albarn;Jamie Hewlett
+Mitski|f|Mitsuki Laycock|1990-09-27||Mie, Japão|us
+Mumford & Sons|b||2007||Londres|uk|Marcus Mumford;Ben Lovett;Ted Dwane;Winston Marshall
+Megan Moroney|f||1997-07-26||Douglas, Geórgia|us
+Baby Keem|m|Hykeem Jamaal Carter Jr.|1999-09-22||Las Vegas, Nevada|us
+BLACKPINK|g||2016||Seul|kr|Jisoo;Jennie;Rosé;Lisa
+Charli xcx|f|Charlotte Emma Aitchison|1992-08-02||Cambridge, Inglaterra|uk||Charli XCX
+Ariana Grande|f|Ariana Grande-Butera|1993-06-26||Boca Raton, Flórida|us
+Stray Kids|g||2017||Seul|kr|Bang Chan;Lee Know;Changbin;Hyunjin;Han;Felix;Seungmin;I.N
+KATSEYE|g||2024||Los Angeles|us|Sophia Laforteza;Daniela Avanzini;Lara Raj;Manon Bannerman;Megan Skiendiel;Yoonchae Jeung
+ENHYPEN|g||2020||Seul|kr|Jungwon;Heeseung;Jay;Jake;Sunghoon;Sunoo;Ni-ki
+Morgan Wallen|m|Morgan Cole Wallen|1993-05-13||Sneedville, Tennessee|us
+Melanie Martinez|f|Melanie Adele Martinez|1995-04-28||Nova York|us
+Charlie Puth|m|Charles Otto Puth Jr.|1991-12-02||Rumson, Nova Jersey|us
+Eagles|b||1971||Los Angeles|us|Glenn Frey;Don Henley;Joe Walsh;Timothy B. Schmit;Bernie Leadon;Randy Meisner;Don Felder
+AC/DC|b||1973||Sydney|au|Angus Young;Malcolm Young;Bon Scott;Brian Johnson;Phil Rudd;Cliff Williams
+Shania Twain|f|Eilleen Regina Edwards|1965-08-28||Windsor, Ontário|ca
+Whitney Houston|f|Whitney Elizabeth Houston|1963-08-09|2012-02-11|Newark, Nova Jersey|us
+Alanis Morissette|f|Alanis Nadine Morissette|1974-06-01||Ottawa, Ontário|ca
+Bob Marley & The Wailers|b||1963||Kingston|jm|Bob Marley;Peter Tosh;Bunny Wailer|Bob Marley
+Metallica|b||1981||Los Angeles|us|James Hetfield;Lars Ulrich;Kirk Hammett;Robert Trujillo;Cliff Burton;Jason Newsted;Dave Mustaine
+Celine Dion|f|Céline Marie Claudette Dion|1968-03-30||Charlemagne, Quebec|ca||Céline Dion
+ABBA|g||1972||Estocolmo|se|Agnetha Fältskog;Björn Ulvaeus;Benny Andersson;Anni-Frid Lyngstad
+Guns N' Roses|b||1985||Los Angeles|us|Axl Rose;Slash;Izzy Stradlin;Duff McKagan;Steven Adler|Guns and Roses
+Van Morrison|m|George Ivan Morrison|1945-08-31||Belfast|uk
+Love|b||1965||Los Angeles|us|Arthur Lee;Bryan MacLean;Johnny Echols;Ken Forssi;Michael Stuart
+Patti Smith|f|Patricia Lee Smith|1946-12-30||Chicago, Illinois|us
+The Rolling Stones|b||1962||Londres|uk|Mick Jagger;Keith Richards;Charlie Watts;Ronnie Wood;Brian Jones;Bill Wyman;Mick Taylor
+Bob Dylan|m|Robert Allen Zimmerman|1941-05-24||Duluth, Minnesota|us
+Carole King|f|Carol Joan Klein|1942-02-09||Nova York|us
+Talking Heads|b||1975||Nova York|us|David Byrne;Tina Weymouth;Chris Frantz;Jerry Harrison
+King Crimson|b||1968||Londres|uk|Robert Fripp;Greg Lake;Ian McDonald;Michael Giles;Peter Sinfield
+The Jimi Hendrix Experience|b||1966||Londres|uk|Jimi Hendrix;Noel Redding;Mitch Mitchell|Jimi Hendrix
+Black Sabbath|b||1968||Birmingham|uk|Ozzy Osbourne;Tony Iommi;Geezer Butler;Bill Ward
+Sex Pistols|b||1975||Londres|uk|Johnny Rotten;Steve Jones;Paul Cook;Glen Matlock;Sid Vicious
+Joy Division|b||1976||Salford|uk|Ian Curtis;Bernard Sumner;Peter Hook;Stephen Morris
+N.W.A|g||1987||Compton, Califórnia|us|Eazy-E;Dr. Dre;Ice Cube;MC Ren;DJ Yella|NWA
+Beastie Boys|g||1981||Nova York|us|Ad-Rock;Mike D;MCA
+Ramones|b||1974||Forest Hills, Nova York|us|Joey Ramone;Johnny Ramone;Dee Dee Ramone;Tommy Ramone
+Kraftwerk|b||1970||Düsseldorf|de|Ralf Hütter;Florian Schneider;Karl Bartos;Wolfgang Flür
+Ichiko Aoba|f||1991-02-17||Japão|jp
+Sessa|m|Sergio Sayeg|||São Paulo|br
+Ana Frango Elétrico|f|Ana Fainguelernt|||Rio de Janeiro|br
+Juçara Marçal|f|||||São Paulo|br
+Lankum|b||2012||Dublin|ie|Ian Lynch;Radie Peat;Daragh Lynch;Cormac MacDiarmada
+Mdou Moctar|m|Mahamadou Souleymane||||Abalak, Níger|ne
+Yussef Dayes|m||||Londres|uk
+Nala Sinephro|f||||||uk
+Kadhja Bonet|f||||||us
+Rokia Traoré|f||1974-01-24||Kolokani, Mali|ml
+Lhasa de Sela|f|Lhasa Sela|1972-09-27|2010-01-01|Big Indian, Nova York|us||Lhasa
+The Durutti Column|p||1978||Manchester|uk|Vini Reilly
+Denzel Curry|m|Denzel Rae Don Curry|1995-02-16||Carol City, Flórida|us
+Moses Sumney|m||||San Bernardino, Califórnia|us
+Chelsea Wolfe|f|Chelsea Joy Wolfe|||Chico, Califórnia|us
+Mid-Air Thief|p||||Seul|kr`;
+const CT={us:["EUA","norte-americano","norte-americana"],uk:["Reino Unido","britânico","britânica"],br:["Brasil","brasileiro","brasileira"],ca:["Canadá","canadense","canadense"],ie:["Irlanda","irlandês","irlandesa"],fr:["França","francês","francesa"],se:["Suécia","sueco","sueca"],is:["Islândia","islandês","islandesa"],nz:["Nova Zelândia","neozelandês","neozelandesa"],au:["Austrália","australiano","australiana"],ng:["Nigéria","nigeriano","nigeriana"],pr:["Porto Rico","porto-riquenho","porto-riquenha"],es:["Espanha","espanhol","espanhola"],bb:["Barbados","barbadiano","barbadiana"],pk:["Paquistão","paquistanês","paquistanesa"],kr:["Coreia do Sul","sul-coreano","sul-coreana"],jp:["Japão","japonês","japonesa"],de:["Alemanha","alemão","alemã"],jm:["Jamaica","jamaicano","jamaicana"],ml:["Mali","malinês","malinesa"],ne:["Níger","nigerino","nigerina"]};
 const IM=new Map(AI.split("\n").map(l=>{const p=l.split("|");return[slug(p[0]),{t:p[1],f:p[2],b:p[3],d:p[4],pl:p[5],c:p[6],m:p[7]?p[7].split(";"):[],al:p[8]?p[8].split(";"):[]}]}));
-const CR={"Milton Nascimento e Lô Borges":["Milton Nascimento","Lô Borges"],"Elis Regina e Tom Jobim":["Elis Regina","Tom Jobim"],"Silk Sonic (Bruno Mars e Anderson .Paak)":["Silk Sonic","Bruno Mars","Anderson .Paak"],"Vários artistas":["Caetano Veloso","Gilberto Gil","Gal Costa","Os Mutantes","Tom Zé","Nara Leão"]};
+const CR={"Milton Nascimento e Lô Borges":["Milton Nascimento","Lô Borges"],"Elis Regina e Tom Jobim":["Elis Regina","Tom Jobim"],"Silk Sonic (Bruno Mars e Anderson .Paak)":["Silk Sonic","Bruno Mars","Anderson .Paak"],"Ye":["Kanye West"],"Vários artistas":["Caetano Veloso","Gilberto Gil","Gal Costa","Os Mutantes","Tom Zé","Nara Leão"]};
 const credits=a=>CR[a.a]||[a.a];
 const IDT={m:"Cantor",f:"Cantora",x:"Artista",b:"Banda",g:"Grupo",d:"Dupla",p:"Projeto musical"};
 const ini=n=>n.split(/\s+/).filter(w=>/[A-Za-z0-9À-ÿ]/.test(w[0])).slice(0,2).map(w=>w[0]).join("").toUpperCase();
@@ -1451,9 +1625,9 @@ function listform(h){if(!D||D.src!==h){const l=h.startsWith("lista-editar-")&&S.
 return `<p><a href="javascript:history.back()">‹ Cancelar</a></p><h1>${D.id?"Editar lista":"Nova lista"}</h1><div class="box" style="display:grid;gap:8px"><input data-d="n" placeholder="Nome da lista" maxlength="80" value="${esc(D.n)}" aria-label="Nome da lista"><textarea data-d="d" rows="4" placeholder="Descrição (opcional): critério, proposta da lista…">${esc(D.d)}</textarea><label class="chk"><input type="checkbox" data-d="rk" ${D.rk?"checked":""}> Ativar ranking</label><div class="bar" style="margin:0">${D.cv?`<img src="${D.cv}" alt="" style="width:64px;height:64px;border-radius:4px;object-fit:cover">`:""}<label class="btn">${D.cv?"Trocar capa":"Imagem de capa (opcional)"}<input type="file" id="lcf" accept="image/*" hidden></label>${D.cv?`<button data-a="lcrm">Remover capa</button>`:""}</div></div>
 <h2>Álbuns da lista (${D.ids.length})</h2>${D.ids.map((i,n)=>{const a=get(i);return a?`<div class="li"><span class="rk">${D.rk?(n+1)+"º":""}</span><span>${esc(a.t)} <small>${esc(a.a)}</small></span><button data-a="dup" data-i="${n}" aria-label="Subir">↑</button><button data-a="ddn" data-i="${n}" aria-label="Descer">↓</button><button data-a="drm" data-i="${n}" aria-label="Remover">✕</button></div>`:""}).join("")}
 <div class="bar" style="margin-top:12px"><input type="search" data-d="q" placeholder="Buscar álbum para adicionar" value="${esc(DQ)}"></div><div id="dres">${dres()}</div><div class="bar"><button class="on" data-a="dsave">Salvar lista</button></div>`}
-function render(){const h=location.hash.slice(1)||"inicio",app=document.getElementById("app");if(!/^lista-(nova|editar-)/.test(h))D=null;const p=h.startsWith("album-")?"album":h.startsWith("artista-")?"artista":h.startsWith("lista-")?"lista":h;
-document.getElementById("nav").innerHTML=TABS.map(t=>`<a href="#${t[0]}" class="${t[0]==(p=="artista"?"busca":p=="lista"||p=="estatisticas"?"perfil":p)?"on":""}"><b>${t[1]}</b>${t[2]}</a>`).join("");
-try{app.innerHTML=p=="album"?album(h.slice(6)):p=="artista"?artist(h.slice(8)):p=="explorar"?explore():p=="busca"?search():p=="watchlist"?watch():p=="biblioteca"?lib():p=="perfil"?profile():p=="estatisticas"?prof():p=="lista"?(h=="lista-nova"||h.startsWith("lista-editar-")?listform(h):listpage(h.slice(6))):home()}catch(e){app.innerHTML=empty("Algo deu errado ao carregar esta página. Volte ao <a href='#inicio'>início</a>.")}}
+function render(){const h=location.hash.slice(1)||"inicio",app=document.getElementById("app");if(!/^lista-(nova|editar-)/.test(h))D=null;const p=h.startsWith("album-")?"album":h.startsWith("artista-")?"artista":h.startsWith("lista-")?"lista":h.startsWith("destaque-")?"destaque":h;
+document.getElementById("nav").innerHTML=TABS.map(t=>`<a href="#${t[0]}" class="${t[0]==(p=="artista"?"busca":p=="lista"||p=="estatisticas"?"perfil":p=="destaque"?"inicio":p)?"on":""}"><b>${t[1]}</b>${t[2]}</a>`).join("");
+try{app.innerHTML=p=="album"?album(h.slice(6)):p=="artista"?artist(h.slice(8)):p=="explorar"?explore():p=="busca"?search():p=="watchlist"?watch():p=="biblioteca"?lib():p=="perfil"?profile():p=="estatisticas"?prof():p=="destaque"?destaque(h.slice(9)):p=="lista"?(h=="lista-nova"||h.startsWith("lista-editar-")?listform(h):listpage(h.slice(6))):home()}catch(e){app.innerHTML=empty("Algo deu errado ao carregar esta página. Volte ao <a href='#inicio'>início</a>.")}}
 addEventListener("hashchange",()=>{P.menu=0;ANI=1;render();scrollTo(0,0)});
 document.addEventListener("input",e=>{const t=e.target;if(t.id=="q"){Q=t.value;document.getElementById("res").innerHTML=sres()}
 else if(t.dataset.w=="q"){W.q=t.value;document.getElementById("wl").innerHTML=listView(Object.keys(S.u).filter(i=>S.u[i].w),W,"Nada encontrado.",a=>"Adicionado em "+dt(U(a.id).w))}
