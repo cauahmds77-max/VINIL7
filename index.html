@@ -970,7 +970,14 @@ Wu-Tang Forever|Wu-Tang Clan|1997|Hip hop
 The W|Wu-Tang Clan|2000|Hip hop
 Iron Flag|Wu-Tang Clan|2001|Hip hop
 8 Diagrams|Wu-Tang Clan|2007|Hip hop
-A Better Tomorrow|Wu-Tang Clan|2014|Hip hop`;
+A Better Tomorrow|Wu-Tang Clan|2014|Hip hop
+Eyes Wide Open|Sabrina Carpenter|2015|Pop,Teen pop
+Evolution|Sabrina Carpenter|2016|Pop
+Singular: Act I|Sabrina Carpenter|2018|Pop
+Singular: Act II|Sabrina Carpenter|2019|Pop
+Emails I Can't Send|Sabrina Carpenter|2022|Pop,Synth-pop
+Short n' Sweet|Sabrina Carpenter|2024|Pop
+Man's Best Friend|Sabrina Carpenter|2025|Pop`;
 const slug=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const key=(t,a,y)=>norm(t)+"|"+norm(a)+"|"+y;
 const okR=v=>typeof v=="number"&&Number.isInteger(v*2)&&v>=.5&&v<=5;
@@ -1309,6 +1316,7 @@ Olivia Dean|f|||||uk
 Ella Langley|f|||||us
 RAYE|f|Rachel Agatha Keen||||uk
 Olivia Rodrigo|f|Olivia Isabel Rodrigo|2003-02-20||Murrieta, Califórnia|us
+Sabrina Carpenter|f|Sabrina Annlynn Carpenter|1999-05-11||Quakertown, Pensilvânia|us
 Bruno Mars|m|Peter Gene Hernandez|1985-10-08||Honolulu, Havaí|us
 Anderson .Paak|m|Brandon Paak Anderson|1986-02-08||Oxnard, Califórnia|us||Anderson Paak
 Silk Sonic|p||2021|||us|Bruno Mars;Anderson .Paak
@@ -1489,7 +1497,7 @@ const AW={"Madonna":"Introduzida ao Rock and Roll Hall of Fame em 2008 e reconhe
 const esvg=on=>`<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"${on?' fill="currentColor"':""}/>${on?"":'<path d="M3 3l18 18"/>'}</svg>`;
 const hsvg=on=>`<svg viewBox="0 0 24 24" width="16" height="16" fill="${on?"currentColor":"none"}" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>`;
 const acard=a=>{const lis=listens(a.id).length>0,fv=!!(S.u[a.id]&&S.u[a.id].f);return `<div class="ac">${card(a)}${meta(a)?`<small style="color:var(--m)">${meta(a)}</small>`:""}<span class="ab ab-l ${lis?"on":""}" role="img" aria-label="${lis?"Já ouvido":"Ainda não ouvido"}">${esvg(lis)}</span><button class="ab ab-r ${fv?"on":""}" data-a="afav" data-id="${a.id}" aria-pressed="${fv}" aria-label="${fv?"Remover dos favoritos":"Favoritar"}">${hsvg(fv)}</button></div>`};
-function artistRow(){const l=artists().sort((x,y)=>x.n.localeCompare(y.n)),k=(new Date().getDate()*7)%Math.max(l.length,1),r=l.slice(k).concat(l.slice(0,k));return r.length?`<div class="arow" aria-label="Artistas">${r.map(x=>`<a class="ap" href="#artista-${x.id}">${aph(x)}<p>${esc(x.n)}</p></a>`).join("")}</div>`:""}
+function artistRow(){const r=artists().sort((x,y)=>x.n.localeCompare(y.n,"pt",{sensitivity:"base"}));return r.length?`<div class="arow" aria-label="Artistas">${r.map(x=>`<a class="ap" href="#artista-${x.id}">${aph(x)}<p>${esc(x.n)}</p></a>`).join("")}</div>`:""}
 function artist(id){const r=artists().find(x=>x.id===id);
 if(!r)return empty("Artista não encontrado.")+`<p style="text-align:center"><a href="#busca">Voltar à Busca</a></p>`;
 const i=r.i,t=i.t||"x",grp="bgdp".includes(t),c=CT[i.c],rows=[],row=(k,v)=>{if(v)rows.push(`<div class="li"><span><small>${k}</small><br>${esc(v)}</span></div>`)};
