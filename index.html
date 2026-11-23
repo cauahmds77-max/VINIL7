@@ -1100,28 +1100,40 @@ catReady=1;initS();
 const comm=id=>{const r=[(S.u[id]||{}).r].filter(okR);return r.length?{n:r.length,avg:r.reduce((s,v)=>s+v*2,0)/r.length/2}:null};
 const CK="vinil-capas-v1";let C={};try{C=JSON.parse(localStorage.getItem(CK))||{}}catch(e){}
 const csave=()=>{try{localStorage.setItem(CK,JSON.stringify(C))}catch(e){}};
+try{if(!localStorage.getItem("vinil-capas-mig2")){for(const k in C)if(!C[k]||C[k].s!="ok")delete C[k];localStorage.setItem("vinil-capas-mig2","1");csave()}}catch(e){}
 const cimg=(c,big)=>c.src=="mb"?c.u+(big?500:250):c.u.replace(/\{s\}/g,big?600:300);
 const ctag=(a,c,big)=>`<img src="${cimg(c,big)}" alt="Capa de ${esc(a.t)}" loading="lazy" onerror="covErr('${a.id}',this)">`;
 const cover=(a,big)=>{const c=C[a.id];if(!c)cneed(a.id);return `<div class="cv" data-cid="${a.id}" style="--h:${hue(a.t+a.a)}"><b>${esc(a.t)}</b><i>${esc(a.a)}</i>${c&&c.s=="ok"?ctag(a,c,big):""}</div>`};
-function covErr(id,el){el.remove();if(C[id]){C[id].s="fail";csave();cupd()}}
+const CRE=new Set();
+function covErr(id,el){el.remove();if(!C[id])return;if(!CRE.has(id)){CRE.add(id);delete C[id];tried.delete(id);csave();cneed(id);return}C[id]={s:"fail"};csave();cupd()}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const jsonp=u=>new Promise((ok,no)=>{const f="__j"+uid().replace(/\W/g,""),el=document.createElement("script"),cl=()=>{clearTimeout(t);delete window[f];el.remove()},t=setTimeout(()=>{cl();no(0)},12000);window[f]=d=>{cl();ok(d)};el.onerror=()=>{cl();no(0)};el.src=u+"&callback="+f;document.head.appendChild(el)});
-const loads=(u,min)=>new Promise(ok=>{const i=new Image();i.onload=()=>ok(i.naturalWidth>=min&&i.naturalWidth===i.naturalHeight);i.onerror=()=>ok(false);i.src=u});
+const loads=(u,min)=>new Promise(ok=>{const i=new Image(),t=setTimeout(()=>{i.onload=i.onerror=null;ok(false)},15000);i.onload=()=>{clearTimeout(t);ok(i.naturalWidth>=min&&Math.abs(i.naturalWidth-i.naturalHeight)<=2)};i.onerror=()=>{clearTimeout(t);ok(false)};i.src=u});
 const prim=x=>norm(String(x).split(/\s*(?:\(|,|&|\be\b|\bfeat\b|\bcom\b)/)[0]).trim();
 const artOK=(a,n)=>{const p=prim(a.a),q=norm(n);return !!p&&(q.includes(p)||norm(a.a).includes(q.trim()))};
 const cst=x=>{const r=norm(String(x).replace(/\s*[\(\[][^\)\]]*[\)\]]/g,"")).replace(/\s+/g," ").trim();return r||norm(x)};
 const REI=/deluxe|remaster|anniversary|expanded|edition|bonus|version/i;
-function pick(a,rs){let best=null,bs=0;for(const r of rs){if(!r.artworkUrl100||!/\d+x\d+bb/.test(r.artworkUrl100))continue;const n=r.collectionName||"";if(!(norm(n)==norm(a.t)||cst(n)==cst(a.t))||!artOK(a,r.artistName||""))continue;const y=+String(r.releaseDate).slice(0,4),rei=REI.test(n)&&norm(n)!=norm(a.t),yo=Math.abs(y-a.y)<=1,sc=yo&&!rei?3:yo?2:rei&&y>a.y?1:0;if(sc>bs){bs=sc;best={u:r.artworkUrl100.replace(/\d+x\d+bb/,"{s}x{s}bb"),src:"apple",rv:sc<3?1:0}}}return best}
-async function capaApple(a){const d=await jsonp("https://itunes.apple.com/search?entity=album&limit=25&country=us&term="+encodeURIComponent(a.a.replace(/\(.*\)/,"")+" "+a.t));return pick(a,d.results||[])}
-async function capaMB(a){const q='releasegroup:"'+a.t.replace(/"/g,"")+'" AND artist:"'+prim(a.a)+'"',d=await(await fetch("https://musicbrainz.org/ws/2/release-group/?fmt=json&limit=8&query="+encodeURIComponent(q))).json();for(const g of d["release-groups"]||[]){const y=+(g["first-release-date"]||"").slice(0,4),n=(g["artist-credit"]||[]).map(x=>x.name).join(" ");if(norm(g.title)==norm(a.t)&&artOK(a,n)&&Math.abs(y-a.y)<=1&&g["primary-type"]=="Album"&&!(g["secondary-types"]||[]).length){const u="https://coverartarchive.org/release-group/"+g.id+"/front-";if(await loads(u+"500",400))return{u,src:"mb",rv:0}}}return null}
+function pick(a,rs){const l=rs.filter(r=>r.artworkUrl100&&/\d+x\d+bb/.test(r.artworkUrl100)),r=pickCols(a,l)[0];if(!r)return null;const n=r.collectionName||"",y=+String(r.releaseDate).slice(0,4),ex=norm(n)==norm(a.t)||cst(n)==cst(a.t),rv=Math.abs(y-a.y)<=1&&!(REI.test(n)&&!ex)?0:1;return{u:r.artworkUrl100.replace(/\d+x\d+bb/,"{s}x{s}bb"),src:"apple",rv}}
+async function capaApple(a){const ba=a.a.replace(/\(.*\)/,""),tt=a.t.replace(/\s*[\(\[][^\)\]]*[\)\]]/g,""),pl=[["us",ba+" "+a.t],["br",ba+" "+a.t],["us",ba+" "+tt],["gb",tt+" "+ba]];let ok=0,bad=0;
+for(const[cc,term]of pl){let d;try{d=await jr("https://itunes.apple.com/search?entity=album&limit=25&country="+cc+"&term="+encodeURIComponent(term))}catch(e){bad++;if(!ok&&bad>=2)break;continue}ok=1;const m=pick(a,d.results||[]);if(m)return m;await sleep(700)}
+if(!ok)throw 0;return null}
+async function capaDz(a){const art=GEN.test(norm(a.a).trim())?"":'artist:"'+a.a.replace(/\(.*\)/,"").replace(/"/g,"").trim()+'" ',q=art+'album:"'+a.t.replace(/\s*[\(\[][^\)\]]*[\)\]]/g,"").replace(/"/g,"")+'"';
+const d=await jsonp("https://api.deezer.com/search/album?limit=15&output=jsonp&q="+encodeURIComponent(q));if(!d||d.error)throw 0;
+const rs=(d.data||[]).filter(r=>{const an=(r.artist||{}).name||"";return r.cover_xl&&!/d41d8cd98f00b204e9800998ecf8427e/.test(r.cover_xl)&&tmatch(r.title,a.t,a.a)&&artOK2(a,an)&&!(BADV.test(r.title+" "+an)&&!BADV.test(a.t+" "+a.a))});
+const r=rs.find(x=>norm(x.title)==norm(a.t)||cst(x.title)==cst(a.t))||rs[0];if(!r)return null;
+return{u:r.cover_xl.replace(/\/\d+x\d+-/,"/{s}x{s}-"),src:"dz",rv:norm(r.title)==norm(a.t)||cst(r.title)==cst(a.t)?0:1}}
+async function capaMB(a){const art=GEN.test(norm(a.a).trim())?"":' AND artist:"'+prim(a.a)+'"',q='releasegroup:"'+a.t.replace(/"/g,"").replace(/\s*[\(\[][^\)\]]*[\)\]]/g,"")+'"'+art,d=await(await fetch("https://musicbrainz.org/ws/2/release-group/?fmt=json&limit=10&query="+encodeURIComponent(q))).json();
+const yd=g=>{const y=+(g["first-release-date"]||"").slice(0,4);return y?Math.abs(y-a.y):50},pl=g=>g["primary-type"]=="Album"&&!(g["secondary-types"]||[]).length?0:1;
+const ok=(d["release-groups"]||[]).filter(g=>{const n=(g["artist-credit"]||[]).map(x=>x.name).join(" ");return tmatch(g.title,a.t,a.a)&&(!art||artOK2(a,n))&&g["primary-type"]=="Album"&&!(g["secondary-types"]||[]).some(t=>/live|remix|demo|dj-mix|spokenword|interview|mixtape/i.test(t))&&yd(g)<=3}).sort((x,y)=>pl(x)-pl(y)||yd(x)-yd(y));
+for(const g of ok.slice(0,3)){const u="https://coverartarchive.org/release-group/"+g.id+"/front-";if(await loads(u+"500",400))return{u,src:"mb",rv:yd(g)<=1?0:1}}return null}
 const CQ=[],tried=new Set();let crunning=0;
 function cneed(id){if(!tried.has(id)&&(!C[id]||C[id].s=="fail")){CQ.unshift(id);setTimeout(crun,0)}}
-async function crun(){if(crunning)return;crunning=1;while(CQ.length){const id=CQ.shift(),a=get(id);if(!a||tried.has(id))continue;tried.add(id);let m=null,net=1;
-for(let t=0;t<3&&net;t++){try{m=await capaApple(a);net=0}catch(e){await sleep(3000*(t+1))}}
-if(net){tried.delete(id);CQ.unshift(id);break}
-if(!m){await sleep(1100);try{m=await capaMB(a)}catch(e){m=null}}
+const NF={};
+async function crun(){if(crunning)return;crunning=1;while(CQ.length){const id=CQ.shift(),a=get(id);if(!a||tried.has(id))continue;tried.add(id);let m=null,got=0,bad=0;
+for(const f of[capaApple,capaDz,capaMB]){try{m=await f(a);got=1;if(m)break}catch(e){bad++}await sleep(600)}
+if(!m&&!got){tried.delete(id);NF[id]=(NF[id]||0)+1;if(NF[id]<3){CQ.push(id);await sleep(4000*NF[id]);continue}C[id]={s:"fail"};csave();cupd(id);await sleep(1500);continue}
 if(m){C[id]=await loads(cimg(m,1),m.src=="mb"?400:500)?Object.assign(m,{s:"ok"}):{s:"fail"}}else C[id]={s:"pend"};
-csave();cupd(id);await sleep(3200)}crunning=0}
+csave();cupd(id);await sleep(2400)}crunning=0}
 addEventListener("online",()=>crun());
 function cupd(id){const c=C[id],a=id&&get(id);if(a&&c&&c.s=="ok")document.querySelectorAll('.cv[data-cid="'+id+'"]').forEach(el=>{if(!el.querySelector("img"))el.insertAdjacentHTML("beforeend",ctag(a,c,!!el.closest(".big")))});const b=document.getElementById("cst");if(b)b.innerHTML=cstat()}
 function cstat(){const al=cat(),n=x=>al.filter(a=>C[a.id]&&C[a.id].s==x),ok=n("ok"),pe=n("pend"),fa=n("fail"),rv=ok.filter(a=>C[a.id].rv).length,un=al.length-ok.length-pe.length-fa.length;
