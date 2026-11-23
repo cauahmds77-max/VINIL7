@@ -118,6 +118,7 @@ details.hist{margin:18px 0 6px}details.hist summary{cursor:pointer;font:600 15px
 .ract{justify-content:center;margin:10px 0 0}
 .wg{grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:12px}.wg .card p{font-size:13px}.wg .card small{font-size:11px}.wg .bar button{padding:6px 10px;font-size:13px}
 input[type=checkbox],input[type=radio]{accent-color:var(--sel)}
+.ng{padding:0}.ngb{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;padding:12px 14px;text-align:left;flex-wrap:wrap}.ngn{font:700 28px Georgia,serif}.ngs{display:inline-flex;gap:1px}.ngs i{font-style:normal;font-size:18px;background:linear-gradient(90deg,var(--ac) var(--p),#4a443d var(--p));-webkit-background-clip:text;background-clip:text;color:transparent}.ngl{color:var(--m);font:12px system-ui,sans-serif;margin-left:auto}.ngd{padding:0 14px 12px;border-top:1px solid var(--s2)}.ngd .li small{color:var(--m)}
 </style></head><body>
 <nav id="nav"></nav><main id="app"></main><div id="toast" role="status"></div>
 <script>
@@ -1525,6 +1526,7 @@ else body=`<div class="box" style="display:grid;gap:8px"><input id="l-n" placeho
 return `<h1>Minha biblioteca</h1><div class="bar">${tabs}</div>${body}`}
 function album(id){const a=get(id);if(!a)return empty("Álbum não encontrado.")+`<p style="text-align:center"><a href="#explorar">Voltar ao Explorar</a></p>`;const u=U(id),le=latest(id);if(P.aid!==id){P.aid=id;P.at="tracks";P.ra=0}
 return `<p><a href="javascript:history.back()">‹ Voltar</a></p><div class="hero"><div class="big">${cover(a,1)}</div><div><h1>${esc(a.t)}</h1><p style="margin:0 0 8px;font-size:17px">${esc(a.a)} · ${a.y}</p><p class="sub">Ficha: ${credits(a).map(n=>`<a href="#artista-${slug(n)}" style="text-decoration:underline">${esc(n)}</a>`).join(" · ")}</p><p>${a.g.map(g=>`<span class="tag">${esc(g)}</span>`).join("")}</p>${a.l?`<p class="sub">${esc(a.l)}</p>`:""}
+<div id="ngw">${cnsHtml(a)}</div>
 <div class="box rbox" data-a="rtog" data-id="${id}"><div class="rate" role="group" aria-label="Minha nota${u.r?": "+fmt(u.r)+" de 5":""}">${stars(u.r||0,id)}</div>${P.ra===id&&(u.r||le)?`<div class="bar ract">${u.r?`<button data-a="unrate" data-id="${id}">Remover nota</button>`:""}${le?`<button data-a="unheard" data-id="${id}">Remover ouvida</button>`:""}</div>`:""}</div>
 <div class="box cbox"><textarea id="cm" data-id="${id}" rows="5" maxlength="2000" placeholder="Adicionar comentário" aria-label="Adicionar comentário">${esc(le&&le.v||"")}</textarea></div>
 <div class="bar"><button class="${u.w?"on":""}" data-a="w" data-id="${id}">${u.w?"Em Quero ouvir ✓":"Quero ouvir"}</button><button class="${u.f?"on":""}" data-a="f" data-id="${id}">${u.f?"♥ Favorito":"♡ Favoritar"}</button></div>
@@ -1683,7 +1685,8 @@ else if(a=="dclear"){DF=DFE();render()}
 else if(a=="rtog"){P.ra=P.ra===id?0:id;const y=scrollY;render();scrollTo(0,y);if(P.ra===id)popIn(".ract")}
 else if(a=="unheard"){if(confirm("Remover este álbum do seu histórico? Suas audições, nota e comentário serão apagados.")){S.hist=S.hist.filter(e=>e.a!==id);delete U(id).r;syncH(id);P.ra=0;save();render();toast("Removido do seu histórico")}}
 else if(a=="atab"){P.at=id;ANI=3;const y=scrollY;render();scrollTo(0,y)}
-else if(a=="detretry"){const e=DET[id];if(e){delete e.it;delete e.mb}const y=scrollY;render();scrollTo(0,y)}
+else if(a=="ctog"){P.ngo=P.ngo===id?0:id;const g=document.getElementById("ngw"),al=get(id);if(g&&al)g.innerHTML=cnsHtml(al)}
+else if(a=="detretry"){const e=DET[id];if(e){delete e.it;delete e.mb;delete e.wp}const y=scrollY;render();scrollTo(0,y)}
 else if(a=="pfopen"){P.fo=P.fo===i?-1:i;P.fs=-1;render()}
 else if(a=="pfgo"){P.fo=-1;location.hash="album-"+id}
 else if(a=="pfslot"){P.fo=-1;P.fs=P.fs===i?-1:i;P.fq="";render();const q=document.querySelector('[data-pf="q"]');if(q)q.focus()}
@@ -1718,7 +1721,7 @@ else if(a=="plup"||a=="pldn"||a=="plrm"){const l=S.lists.find(x=>x.id==id);if(!l
 /* ===== detalhes do álbum: faixas, créditos, informações ===== */
 const DK="vinil-det-v1";let DET={};try{DET=JSON.parse(localStorage.getItem(DK))||{}}catch(e){DET={}}
 try{for(const k in DET){const e=DET[k];if(e&&e.it&&!(e.it.tr&&e.it.tr.length))delete e.it}}catch(e){}
-const detsave=()=>{try{const o={};for(const k in DET){const e=DET[k],r={};if(e.it&&e.it.s=="ok"&&e.it.tr&&e.it.tr.length)r.it=e.it;if(e.mb&&e.mb.s=="ok")r.mb=e.mb;if(r.it||r.mb)o[k]=r}localStorage.setItem(DK,JSON.stringify(o))}catch(e){}};
+const detsave=()=>{try{const o={};for(const k in DET){const e=DET[k],r={};if(e.it&&e.it.s=="ok"&&e.it.tr&&e.it.tr.length)r.it=e.it;if(e.mb&&e.mb.s=="ok")r.mb=e.mb;if(e.wp&&e.wp.s=="ok")r.wp=e.wp;if(r.it||r.mb||r.wp)o[k]=r}localStorage.setItem(DK,JSON.stringify(o))}catch(e){}};
 function pickCol(a,rs){let best=null,bs=-1;for(const r of rs){if(!r.collectionId)continue;const n=r.collectionName||"";if(!(norm(n)==norm(a.t)||cst(n)==cst(a.t))||!artOK(a,r.artistName||""))continue;const y=+String(r.releaseDate).slice(0,4),rei=REI.test(n)&&norm(n)!=norm(a.t),yo=Math.abs(y-a.y)<=1,k=yo&&!rei?3:yo?2:rei&&y>a.y?1:0;if(k>bs){bs=k;best=r}}return best}
 async function jr(u){for(let t=0;t<2;t++){try{return await jsonp(u)}catch(e){await sleep(1200)}}throw 0}
 const tk=x=>{const r=norm(String(x)).replace(/\b(the|a|an)\b/g," ").replace(/\s+/g," ").trim();return r||norm(x).trim()};
@@ -1766,6 +1769,7 @@ const fin=m=>[...m.entries()].map(([n,z])=>[n,z.has("*")?nt:z.size]).sort((x,y)=
 const lb=[...new Set((rel["label-info"]||[]).map(x=>x.label&&x.label.name).filter(n=>n&&!/^\[no label\]$/i.test(n)))];
 return{s:"ok",prod:fin(pr),comp:fin(cm),label:lb.slice(0,2).join(" / "),rd:rel.date||""}}
 function detNeed(id,tab){const a=get(id);if(!a)return;const e=DET[id]||(DET[id]={});
+if(!e.wp||(e.wp.s=="ok"&&!(e.wp.src||[]).length&&Date.now()-(e.wp.t||0)>12096e5)){e.wp={s:"load"};wpGet(a).then(r=>{e.wp=r;detsave();ngUpd(id)}).catch(()=>{e.wp={s:"err"};ngUpd(id)})}
 if(!e.it){e.it={s:"load"};trGet(a).then(r=>{e.it=r;detsave();detUpd(id)}).catch(()=>{e.it={s:"err"};detUpd(id)})}
 if((tab=="credits"||tab=="info")&&!e.mb){e.mb={s:"load"};mbGet(a).then(r=>{e.mb=r;detsave();detUpd(id)}).catch(()=>{e.mb={s:"err"};detUpd(id)})}}
 function detUpd(id){if(location.hash!=="#album-"+id)return;const el=document.getElementById("atc"),a=get(id);if(!el||!a)return;el.innerHTML=atContent(a);el.classList.remove("fu");void el.offsetWidth;el.classList.add("fu")}
@@ -1793,6 +1797,53 @@ let cmT;
 function cmSave(t,toastIt){const id=t.dataset.id,v=t.value.trim().slice(0,2000),le=latest(id),u=U(id);if(le){if((le.v||"")===v)return;if(v)le.v=v;else delete le.v}else if(v){delete u.w;addListen(id,today(),u.r,v)}else return;save();if(toastIt)toast("Comentário salvo")}
 document.addEventListener("input",e=>{const t=e.target;if(t.id!="cm")return;clearTimeout(cmT);cmT=setTimeout(()=>cmSave(t),700)});
 document.addEventListener("change",e=>{const t=e.target;if(t.id!="cm")return;clearTimeout(cmT);cmSave(t,1)});
+
+/* ===== nota geral: consenso a partir da Wikipedia ===== */
+const LET={"A+":100,"A":100,"A-":91,"B+":83,"B":75,"B-":67,"C+":58,"C":50,"C-":42,"D+":33,"D":25,"D-":17,"E+":8,"E":4,"E-":0,"F":0};
+const f1=n=>n.toFixed(1).replace(".",","),wn=n=>String(Math.round(n*100)/100).replace(".",",");
+const wtClean=s=>String(s||"").replace(/<!--[\s\S]*?-->/g,"").replace(/<ref[^>]*\/>/gi,"").replace(/<ref[^>]*>[\s\S]*?<\/ref>/gi,"").replace(/<br\s*\/?>/gi," ");
+const wtPlain=s=>wtClean(s).replace(/\{\{[^{}]*\}\}/g,"").replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g,"$1").replace(/'{2,}/g,"").replace(/\s+/g," ").trim();
+function wtTpl(t,re){const m=re.exec(t);if(!m)return null;let d=0,j=m.index;for(;j<t.length;j++){if(t[j]=="{"&&t[j+1]=="{"){d++;j++}else if(t[j]=="}"&&t[j+1]=="}"){d--;j++;if(!d){j++;break}}}return d?null:t.slice(m.index+2,j-2)}
+function wtParams(b){const o=[];let d=0,s=0;for(let i=0;i<b.length;i++){const c=b[i],n=b[i+1];if((c=="{"&&n=="{")||(c=="["&&n=="[")){d++;i++}else if((c=="}"&&n=="}")||(c=="]"&&n=="]")){d--;i++}else if(c=="|"&&!d){o.push(b.slice(s,i));s=i+1}}o.push(b.slice(s));return o}
+function wtMap(b){const p={};wtParams(b).slice(1).forEach(x=>{const m=/^\s*([^=|]+?)\s*=([\s\S]*)$/.exec(x);if(m)p[m[1].toLowerCase()]=m[2].trim()});return p}
+function wLet(l){l=l.replace(/[−–]/g,"-").toUpperCase();return LET[l]==null?null:{f:LET[l]/100,r:l.replace("-","−")}}
+function wpScore(raw,mc){let s=wtClean(raw).trim(),m;if(!s)return null;
+if(m=/\{\{\s*(?:star[ _-]?rating|rating|stars?)\s*\|\s*(\d+(?:[.,]\d+)?)\s*\|\s*(\d+(?:[.,]\d+)?)/i.exec(s)){const x=+m[1].replace(",","."),y=+m[2].replace(",",".");return y>=2&&x>=0&&x<=y?{f:x/y,r:wn(x)+"/"+wn(y)}:null}
+if(m=/\{\{\s*[Rr]ating-[A-Za-z]+\s*\|\s*([A-F][+\-−–]?)\s*(?:\||\}\})/.exec(s))return wLet(m[1]);
+s=s.replace(/\{\{[^{}]*\}\}/g,"").replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g,"$1").replace(/'{2,}/g,"").trim();
+if(m=/(\d+(?:[.,]\d+)?)\s*(?:\/|out of|de)\s*(\d+(?:[.,]\d+)?)/i.exec(s)){const x=+m[1].replace(",","."),y=+m[2].replace(",",".");return y>=2&&x<=y?{f:x/y,r:wn(x)+"/"+wn(y)}:null}
+if(m=/^(\d{1,3}(?:[.,]\d+)?)\s*%$/.exec(s)){const x=+m[1].replace(",",".");return x<=100?{f:x/100,r:wn(x)+"%"}:null}
+if(m=/^([★☆]+)\s*(½)?/.exec(s)){const fi=(m[1].match(/★/g)||[]).length,em=(m[1].match(/☆/g)||[]).length,x=fi+(m[2]?.5:0),y=em?fi+em:5;return x>0&&x<=y?{f:x/y,r:wn(x)+"/"+wn(y)}:null}
+if(m=/^([A-F])\s*([+\-−–]?)$/.exec(s))return wLet(m[1]+m[2]);
+if(mc&&(m=/^(\d{1,3})$/.exec(s))&&+m[1]<=100)return{f:+m[1]/100,r:m[1]+"/100"};
+return null}
+function wpParse(t){const b=wtTpl(t,/\{\{\s*(?:Album ratings|Music ratings|Album reviews|Professional ratings)\b/i);if(!b)return null;const p=wtMap(b),out=[],seen=new Set();
+const add=(n,raw,mc)=>{n=wtPlain(n);if(!n)return;const k=norm(n).replace(/\s/g,"");if(seen.has(k))return;const r=wpScore(raw,mc||/metacritic/i.test(n));if(!r)return;seen.add(k);out.push({n,r:r.r,v:Math.round(Math.max(.5,Math.min(5,r.f*5))*10)/10})};
+for(let i=1;i<=30;i++){if(p["rev"+i]!=null)add(p["rev"+i],p["rev"+i+"score"]||"")}
+if(p.mc)add("Metacritic",p.mc,1);return out}
+async function wpGet(a){const tt=a.t.replace(/\s*[\(\[][^\)\]]*[\)\]]/g,"").trim(),q=tt+" "+prim(a.a)+" album";
+const r=await fetch("https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch="+encodeURIComponent(q)+"&gsrlimit=3&gsrnamespace=0&prop=revisions&rvprop=content&rvslots=main&format=json&formatversion=2&origin=*");
+if(!r.ok)throw 0;const d=await r.json(),pg=((d.query||{}).pages||[]).slice().sort((x,y)=>(x.index||0)-(y.index||0));
+for(const p of pg){const t=(((((p.revisions||[])[0])||{}).slots||{}).main||{}).content;if(!t)continue;
+if(!tmatch(p.title.replace(/\s*\(.*\)$/,""),a.t,a.a))continue;
+const ib=wtTpl(t,/\{\{\s*Infobox album\b/i);if(!ib)continue;const ip=wtMap(ib);
+if(!artOK2(a,wtPlain(ip.artist||"")))continue;
+const y=/\b(?:19|20)\d\d\b/.exec(wtClean(ip.released||""));if(y&&Math.abs(+y[0]-a.y)>2)continue;
+const src=wpParse(t);if(src&&src.length)return{s:"ok",t:Date.now(),pg:p.title,src}}
+return{s:"ok",t:Date.now(),pg:"",src:[]}}
+const cons=w=>{const s=(w&&w.s=="ok"&&w.src)||[];return s.length?Math.round(s.reduce((z,x)=>z+x.v,0)/s.length*10)/10:null};
+const nstars=v=>{let h="";for(let i=0;i<5;i++)h+=`<i style="--p:${Math.round(Math.max(0,Math.min(1,v-i))*100)}%">★</i>`;return h};
+function cnsHtml(a){const id=a.id,w=(DET[id]||{}).wp;
+if(!w||w.s=="load")return `<p class="dm">Buscando notas da crítica…</p>`;
+if(w.s=="err")return `<p class="dm">Não foi possível buscar as notas da crítica agora.</p><div class="bar"><button data-a="detretry" data-id="${id}">Tentar de novo</button></div>`;
+const c=cons(w),n=w.src.length;if(c==null)return `<p class="dm">Nenhuma nota da crítica encontrada na Wikipedia para este álbum.</p>`;
+const open=P.ngo===id,link="https://en.wikipedia.org/wiki/"+encodeURIComponent(w.pg.replace(/ /g,"_"));
+return `<div class="box ng"><button class="ngb" data-a="ctog" data-id="${id}" aria-expanded="${open}"><span class="ngn">${f1(c)}</span><span class="ngs" aria-hidden="true">${nstars(c)}</span><span class="ngl">Nota geral · ${n} ${n>1?"fontes":"fonte"} ${open?"▴":"▾"}</span></button>`+
+(open?`<div class="ngd"><p class="dm">Como o app chegou a ${f1(c)}</p>${w.src.map(x=>`<div class="li"><span>${esc(x.n)}</span><small>${esc(x.r)}</small><b>${f1(x.v)} ★</b></div>`).join("")}
+<p class="dm">Cada nota foi convertida para a escala de 0,5 a 5 estrelas (nota ÷ máximo × 5) e arredondada para uma casa decimal. A nota geral é a média simples: ${n>1?`(${w.src.map(x=>f1(x.v)).join(" + ")}) ÷ ${n}`:f1(w.src[0].v)} = <b>${f1(c)}</b>.</p>
+<p class="dm">Notas em letra seguem uma tabela fixa (A = 5, B = 3,75, C = 2,5, D = 1,25).${n<3?" Há poucas fontes, então esta nota é menos representativa.":""}</p>
+<p class="dm">Dados da caixa “Professional ratings” da Wikipedia: <a href="${esc(link)}" target="_blank" rel="noopener" style="text-decoration:underline">${esc(w.pg)}</a>.</p></div>`:"")+`</div>`}
+function ngUpd(id){if(location.hash!=="#album-"+id)return;const el=document.getElementById("ngw"),a=get(id);if(el&&a)el.innerHTML=cnsHtml(a)}
 
 /* ===== transições: página, abas, capas ===== */
 let ANI=1;
